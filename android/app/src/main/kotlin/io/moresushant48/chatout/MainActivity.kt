@@ -1,4 +1,4 @@
-package io.moresushant48.chatapp
+package io.moresushant48.chatout
 
 import io.flutter.embedding.android.FlutterActivity
 
