@@ -1,6 +1,6 @@
-import 'package:chatapp/HomePage.dart';
-import 'package:chatapp/SignIn.dart';
-import 'package:chatapp/SignUp.dart';
+import 'package:chatapp/views/HomePage.dart';
+import 'package:chatapp/views/SignIn.dart';
+import 'package:chatapp/views/SignUp.dart';
 import 'package:flutter/material.dart';
 
 void main() {

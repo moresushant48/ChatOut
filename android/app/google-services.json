@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "356910128272",
+    "firebase_url": "https://chatout-decb3.firebaseio.com",
+    "project_id": "chatout-decb3",
+    "storage_bucket": "chatout-decb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356910128272:android:6cd7f5885c4e3cb7cf0c15",
+        "android_client_info": {
+          "package_name": "io.moresushant48.chatout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356910128272-n249vta6p3evh92o518nkohd20a975nv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClk8hMnaDAQsZ_QJt962AGlgxIgov7WBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356910128272-n249vta6p3evh92o518nkohd20a975nv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
