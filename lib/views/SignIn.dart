@@ -1,3 +1,4 @@
+import 'package:chatapp/views/SignUp.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -68,7 +69,7 @@ class _SignInState extends State<SignIn> {
                 //
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: MaterialButton(
+                  child: RaisedButton(
                     color: Colors.blue,
                     onPressed: () {},
                     child: Text(
@@ -76,6 +77,25 @@ class _SignInState extends State<SignIn> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
+                ),
+                SizedBox(height: 16.0),
+                //
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have Account ? "),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUp(),
+                          )),
+                      child: Text(
+                        "Register Now",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    )
+                  ],
                 )
               ],
             )),
