@@ -1,5 +1,8 @@
+import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/views/HomePage.dart';
 import 'package:chatapp/views/SignIn.dart';
+import 'package:chatapp/views/SignUp.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,9 +18,21 @@ class ChatApp extends StatefulWidget {
 class _ChatAppState extends State<ChatApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SignIn(),
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError)
+          return Container(
+            color: Colors.red,
+          );
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: ChatRoom(),
+          );
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }

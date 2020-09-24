@@ -1,3 +1,5 @@
+import 'package:chatapp/services/auth.dart';
+import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/views/SignUp.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +10,30 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _signInKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  AuthMethods authMethods = AuthMethods();
+
+  _signIn() {
+    if (_signInKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      authMethods
+          .signInWithEmailAndPassword(
+              _emailController.text.trim(), _passwordController.text.trim())
+          .then((value) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatRoom(),
+            ));
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +83,10 @@ class _SignInState extends State<SignIn> {
                           icon: Icon(Icons.vpn_key),
                           border: InputBorder.none),
                       validator: (value) {
-                        if (value.isEmpty) return "Please enter your password.";
+                        if (value.isEmpty)
+                          return "Please enter your password.";
+                        else if (value.length < 6)
+                          return "Atleast 6 characters required.";
                         return null;
                       },
                     ),
@@ -71,7 +98,7 @@ class _SignInState extends State<SignIn> {
                   borderRadius: BorderRadius.circular(8.0),
                   child: RaisedButton(
                     color: Colors.blue,
-                    onPressed: () {},
+                    onPressed: _signIn,
                     child: Text(
                       "Sign In",
                       style: TextStyle(color: Colors.white),
@@ -85,7 +112,7 @@ class _SignInState extends State<SignIn> {
                   children: [
                     Text("Don't have Account ? "),
                     GestureDetector(
-                      onTap: () => Navigator.push(
+                      onTap: () => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => SignUp(),
