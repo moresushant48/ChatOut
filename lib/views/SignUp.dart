@@ -2,6 +2,7 @@ import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/views/SignIn.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,11 +38,24 @@ class _SignUpState extends State<SignUp> {
         };
 
         databaseMethods.uploadUserInfo(userMap);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatRoom(),
-            ));
+        authMethods
+            .signInWithEmailAndPassword(
+                _emailController.text.trim(), _passwordController.text.trim())
+            .then((value) {
+          if (value != null) {
+            FirebaseAuth.instance.currentUser
+                .updateProfile(
+                    displayName: _usernameController.text.trim().toLowerCase())
+                .whenComplete(() {
+              FirebaseAuth.instance.currentUser.reload();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatRoom(),
+                  ));
+            });
+          }
+        });
       });
     }
   }

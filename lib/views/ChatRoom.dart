@@ -2,6 +2,7 @@ import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/views/SplashScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ChatRoomState extends State<ChatRoom> {
           )
         ],
       ),
-      body: Text("ChatROOM"),
+      body: Text(FirebaseAuth.instance.currentUser.displayName),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: () {
