@@ -2,6 +2,7 @@ import 'package:chatapp/views/ChatRoom.dart';
 import 'package:chatapp/views/HomePage.dart';
 import 'package:chatapp/views/SignIn.dart';
 import 'package:chatapp/views/SignUp.dart';
+import 'package:chatapp/views/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _ChatAppState extends State<ChatApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: ChatRoom(),
+            home: SplashScreen(),
           );
         }
         return CircularProgressIndicator();
