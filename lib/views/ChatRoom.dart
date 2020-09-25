@@ -1,4 +1,6 @@
 import 'package:chatapp/services/DatabaseMethods.dart';
+import 'package:chatapp/services/auth.dart';
+import 'package:chatapp/views/SplashScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -8,11 +10,26 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+  final auth = AuthMethods();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("ChatOut"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              auth.signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SplashScreen(),
+                  ));
+            },
+          )
+        ],
       ),
       body: Text("ChatROOM"),
       floatingActionButton: FloatingActionButton(
