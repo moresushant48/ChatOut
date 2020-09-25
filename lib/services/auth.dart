@@ -4,16 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  ChatUser _userFromFirebaseUser(User user) {
-    return user != null ? ChatUser(userId: user.uid) : null;
-  }
-
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user;
-      return _userFromFirebaseUser(user);
+      User user = (await _auth.signInWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+
+      return user != null ? ChatUser(userId: user.uid) : null;
     } catch (e) {
       print(e.toString());
     }
@@ -21,10 +18,10 @@ class AuthMethods {
 
   Future signUpWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user;
-      return _userFromFirebaseUser(user);
+      User user = (await _auth.createUserWithEmailAndPassword(
+              email: email, password: password))
+          .user;
+      return user != null ? ChatUser(userId: user.uid) : null;
     } catch (e) {
       print(e.toString());
     }
