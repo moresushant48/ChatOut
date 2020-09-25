@@ -8,6 +8,8 @@ class Conversation extends StatefulWidget {
 class _ConversationState extends State<Conversation> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text("Conversation"),
+    );
   }
 }
