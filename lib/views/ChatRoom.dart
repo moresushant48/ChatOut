@@ -43,6 +43,11 @@ class _ChatRoomState extends State<ChatRoom> {
                             snapshot.data.documents[index]
                                 .get('chatRoomId')
                                 .toString()
+                                .replaceAll("_", "")
+                                .replaceAll(
+                                    FirebaseAuth
+                                        .instance.currentUser.displayName,
+                                    "")
                                 .substring(0, 1),
                             style: TextStyle(fontSize: 24.0),
                           ),
