@@ -1,8 +1,8 @@
 import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/services/auth.dart';
+import 'package:chatapp/views/Coversation.dart';
 import 'package:chatapp/views/SearchUser.dart';
 import 'package:chatapp/views/SplashScreen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +13,61 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   final auth = AuthMethods();
+  final databaseMethods = DatabaseMethods();
+  Stream chatRoomStream;
+
+  Widget chatRoomList() {
+    return StreamBuilder(
+      stream: chatRoomStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Conversation(snapshot
+                                .data.documents[index]
+                                .get('chatRoomId')),
+                          ))
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(snapshot.data.documents[index]
+                            .get('chatRoomId')
+                            .toString()
+                            .substring(0, 1)),
+                      ),
+                      title: Text(snapshot.data.documents[index]
+                          .get('chatRoomId')
+                          .toString()
+                          .replaceAll("_", "")
+                          .replaceAll(
+                              FirebaseAuth.instance.currentUser.displayName,
+                              "")),
+                    ),
+                  );
+                },
+              )
+            : LinearProgressIndicator();
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    databaseMethods
+        .getChatRooms(FirebaseAuth.instance.currentUser.displayName)
+        .then((value) {
+      setState(() {
+        chatRoomStream = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +88,9 @@ class _ChatRoomState extends State<ChatRoom> {
           )
         ],
       ),
-      body: Text(FirebaseAuth.instance.currentUser.displayName),
+      body: Container(
+        child: chatRoomList(),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: () {

@@ -20,7 +20,7 @@ class SearchUserDelegate extends SearchDelegate {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Conversation(),
+          builder: (context) => Conversation(chatRoomId),
         ));
   }
 
