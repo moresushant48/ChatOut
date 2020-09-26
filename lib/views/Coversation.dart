@@ -64,7 +64,11 @@ class _ConversationState extends State<Conversation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.chatRoomId
+            .replaceAll("_", "")
+            .replaceAll(FirebaseAuth.instance.currentUser.displayName, "")),
+      ),
       body: Container(
           child: Stack(
         children: [
