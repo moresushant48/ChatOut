@@ -76,29 +76,31 @@ class _SignUpState extends State<SignUp> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Container(
-                          padding: EdgeInsets.all(8.0),
-                          color: Colors.grey[200],
-                          child: TextFormField(
-                            controller: _usernameController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                hintText: "Username (ex. johnbuyer)",
-                                icon: Icon(Icons.person),
-                                border: InputBorder.none),
-                            validator: (value) {
-                              if (value.isEmpty)
-                                return "Please enter your username.";
-                              else if (value.length < 4)
-                                return "Atleast 4 characters required.";
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                _lowercaseUsername = value.trim().toLowerCase();
-                              });
-                            },
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              controller: _usernameController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                  alignLabelWithHint: true,
+                                  hintText: "Username (ex. johnbuyer)",
+                                  icon: Icon(Icons.person),
+                                  border: InputBorder.none),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return "Please enter your username.";
+                                else if (value.length < 4)
+                                  return "Atleast 4 characters required.";
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  _lowercaseUsername =
+                                      value.trim().toLowerCase();
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -110,47 +112,49 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 8.0),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Container(
-                          padding: EdgeInsets.all(8.0),
-                          color: Colors.grey[200],
-                          child: TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.name,
-                            decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                hintText: "Email ID",
-                                icon: Icon(Icons.email),
-                                border: InputBorder.none),
-                            validator: (value) {
-                              if (value.isEmpty)
-                                return "Please enter your email.";
-                              return null;
-                            },
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.name,
+                              decoration: InputDecoration(
+                                  alignLabelWithHint: true,
+                                  hintText: "Email ID",
+                                  icon: Icon(Icons.email),
+                                  border: InputBorder.none),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return "Please enter your email.";
+                                return null;
+                              },
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(height: 8.0),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Container(
-                          padding: EdgeInsets.all(8.0),
-                          color: Colors.grey[200],
-                          child: TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                hintText: "Password",
-                                icon: Icon(Icons.vpn_key),
-                                border: InputBorder.none),
-                            validator: (value) {
-                              if (value.isEmpty)
-                                return "Please enter your password.";
-                              else if (value.length < 6)
-                                return "Atleast 6 characters required.";
-                              return null;
-                            },
+                        child: Card(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration: InputDecoration(
+                                  alignLabelWithHint: true,
+                                  hintText: "Password",
+                                  icon: Icon(Icons.vpn_key),
+                                  border: InputBorder.none),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return "Please enter your password.";
+                                else if (value.length < 6)
+                                  return "Atleast 6 characters required.";
+                                return null;
+                              },
+                            ),
                           ),
                         ),
                       ),

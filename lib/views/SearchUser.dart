@@ -8,6 +8,11 @@ class SearchUserDelegate extends SearchDelegate {
   QuerySnapshot _users;
   final databaseMethods = DatabaseMethods();
 
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return Theme.of(context);
+  }
+
   createChatRoomAndStartConversation(BuildContext context, String username) {
     String myName = FirebaseAuth.instance.currentUser.displayName;
     String chatRoomId = getChatRoomId(username, myName);

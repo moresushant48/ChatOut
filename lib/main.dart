@@ -25,6 +25,7 @@ class _ChatAppState extends State<ChatApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
+            theme: ThemeData.dark(),
             home: SplashScreen(),
           );
         }

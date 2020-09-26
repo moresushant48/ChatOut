@@ -24,7 +24,7 @@ class _ChatRoomState extends State<ChatRoom> {
             ? ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () => {
                       Navigator.push(
                           context,

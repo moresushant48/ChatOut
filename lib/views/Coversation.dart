@@ -78,9 +78,7 @@ class _ConversationState extends State<Conversation> {
           ),
           Container(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(8.0),
+            child: Card(
               child: Row(
                 children: [
                   Expanded(
@@ -88,7 +86,6 @@ class _ConversationState extends State<Conversation> {
                       borderRadius: BorderRadius.circular(38.0),
                       child: Container(
                         padding: EdgeInsets.all(8.0),
-                        color: Colors.grey[200],
                         child: TextFormField(
                           controller: messageController,
                           keyboardType: TextInputType.name,
@@ -108,7 +105,6 @@ class _ConversationState extends State<Conversation> {
                   IconButton(
                     icon: Icon(
                       Icons.send,
-                      color: Theme.of(context).accentColor,
                     ),
                     onPressed: sendMessage,
                   ),
