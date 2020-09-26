@@ -34,20 +34,27 @@ class _ChatRoomState extends State<ChatRoom> {
                                 .get('chatRoomId')),
                           ))
                     },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        child: Text(snapshot.data.documents[index]
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30.0,
+                          child: Text(
+                            snapshot.data.documents[index]
+                                .get('chatRoomId')
+                                .toString()
+                                .substring(0, 1),
+                            style: TextStyle(fontSize: 24.0),
+                          ),
+                        ),
+                        title: Text(snapshot.data.documents[index]
                             .get('chatRoomId')
                             .toString()
-                            .substring(0, 1)),
+                            .replaceAll("_", "")
+                            .replaceAll(
+                                FirebaseAuth.instance.currentUser.displayName,
+                                "")),
                       ),
-                      title: Text(snapshot.data.documents[index]
-                          .get('chatRoomId')
-                          .toString()
-                          .replaceAll("_", "")
-                          .replaceAll(
-                              FirebaseAuth.instance.currentUser.displayName,
-                              "")),
                     ),
                   );
                 },
@@ -89,6 +96,7 @@ class _ChatRoomState extends State<ChatRoom> {
         ],
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 8.0),
         child: chatRoomList(),
       ),
       floatingActionButton: FloatingActionButton(
