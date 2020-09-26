@@ -79,6 +79,7 @@ class _ConversationState extends State<Conversation> {
           Container(
             alignment: Alignment.bottomCenter,
             child: Container(
+              color: Colors.white,
               padding: EdgeInsets.all(8.0),
               child: Row(
                 children: [
@@ -105,7 +106,10 @@ class _ConversationState extends State<Conversation> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.send),
+                    icon: Icon(
+                      Icons.send,
+                      color: Theme.of(context).accentColor,
+                    ),
                     onPressed: sendMessage,
                   ),
                 ],
