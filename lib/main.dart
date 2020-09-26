@@ -1,7 +1,3 @@
-import 'package:chatapp/views/ChatRoom.dart';
-import 'package:chatapp/views/HomePage.dart';
-import 'package:chatapp/views/SignIn.dart';
-import 'package:chatapp/views/SignUp.dart';
 import 'package:chatapp/views/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
