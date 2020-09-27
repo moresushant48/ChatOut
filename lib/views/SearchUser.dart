@@ -1,11 +1,9 @@
 import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/views/Coversation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SearchUserDelegate extends SearchDelegate {
-  QuerySnapshot _users;
   final databaseMethods = DatabaseMethods();
 
   @override
@@ -62,27 +60,23 @@ class SearchUserDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     DatabaseMethods databaseMethods = DatabaseMethods();
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        databaseMethods.getUserByUsername(query).then((searchedUsers) {
-          setState(() {
-            _users = searchedUsers;
-          });
-        });
-        return _users != null
+    return FutureBuilder(
+      future: databaseMethods.getUserByUsername(query),
+      builder: (context, snapshot) {
+        return snapshot.hasData
             ? ListView.builder(
-                itemCount: _users.docs.length,
+                itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () => createChatRoomAndStartConversation(
-                        context, _users.docs[index].get("name")),
+                        context, snapshot.data.docs[index].get("username")),
                     child: ListTile(
                       leading: Icon(
                         Icons.account_circle,
                         size: 50.0,
                       ),
-                      title: Text(_users.docs[index].get("name")),
-                      subtitle: Text(_users.docs[index].get("email")),
+                      title: Text(snapshot.data.docs[index].get("username")),
+                      subtitle: Text(snapshot.data.docs[index].get("email")),
                     ),
                   );
                 },

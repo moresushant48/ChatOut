@@ -4,7 +4,7 @@ class DatabaseMethods {
   getUserByUsername(String username) {
     return FirebaseFirestore.instance
         .collection("users")
-        .where("name", isEqualTo: username)
+        .where("username", isEqualTo: username)
         .get();
   }
 
