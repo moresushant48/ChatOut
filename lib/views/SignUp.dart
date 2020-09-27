@@ -28,26 +28,44 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         isLoading = true;
       });
+
+      // REGISTER
       authMethods
           .signUpWithEmailAndPassword(
               _emailController.text.trim(), _passwordController.text.trim())
           .then((value) {
-        Map<String, String> userMap = {
-          "name": _usernameController.text.trim().toLowerCase(),
-          "email": _emailController.text.trim()
-        };
-
-        databaseMethods.uploadUserInfo(userMap);
+        //
+        // Instant Login to registered account.
         authMethods
             .signInWithEmailAndPassword(
                 _emailController.text.trim(), _passwordController.text.trim())
             .then((value) {
           if (value != null) {
+            //
+            // If user is logged in , Update his Username to DisplayName.
+            //
             FirebaseAuth.instance.currentUser
                 .updateProfile(
                     displayName: _usernameController.text.trim().toLowerCase())
                 .whenComplete(() {
               FirebaseAuth.instance.currentUser.reload();
+
+              //
+              // Create a map to make database entry of USERS.
+              //
+              Map<String, dynamic> userMap = {
+                "uid": FirebaseAuth.instance.currentUser.uid,
+                "username": _usernameController.text.trim().toLowerCase(),
+                "email": _emailController.text.trim(),
+                "status": true
+              };
+
+              databaseMethods.uploadUserInfo(
+                  uid: FirebaseAuth.instance.currentUser.uid, userMap: userMap);
+
+              //
+              // Redirect to ChatRoom
+              //
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

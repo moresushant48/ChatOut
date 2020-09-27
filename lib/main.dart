@@ -1,4 +1,6 @@
+import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/views/SplashScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -12,7 +14,15 @@ class ChatApp extends StatefulWidget {
   _ChatAppState createState() => _ChatAppState();
 }
 
-class _ChatAppState extends State<ChatApp> {
+class _ChatAppState extends State<ChatApp> with WidgetsBindingObserver {
+  DatabaseMethods databaseMethods = DatabaseMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -32,5 +42,18 @@ class _ChatAppState extends State<ChatApp> {
         return CircularProgressIndicator();
       },
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      Map<String, bool> statusMap = {"status": true};
+      databaseMethods.updateUserStatusByUid(
+          uid: FirebaseAuth.instance.currentUser.uid, statusMap: statusMap);
+    } else {
+      Map<String, bool> statusMap = {"status": false};
+      databaseMethods.updateUserStatusByUid(
+          uid: FirebaseAuth.instance.currentUser.uid, statusMap: statusMap);
+    }
   }
 }
