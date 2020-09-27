@@ -13,6 +13,7 @@ class Conversation extends StatefulWidget {
 class _ConversationState extends State<Conversation> {
   DatabaseMethods databaseMethods = DatabaseMethods();
 
+  final scrollController = ScrollController();
   final messageController = TextEditingController();
   Stream chatMessagesStream;
 
@@ -22,12 +23,16 @@ class _ConversationState extends State<Conversation> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
+                controller: scrollController,
+                reverse: true,
+                shrinkWrap: true,
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   return MessageTile(
                       snapshot.data.documents[index].get('message'),
                       snapshot.data.documents[index].get('sentBy') ==
-                          FirebaseAuth.instance.currentUser.displayName);
+                          FirebaseAuth.instance.currentUser.displayName,
+                      snapshot.data.documents[index].get('time'));
                 },
               )
             : Container();
@@ -45,6 +50,8 @@ class _ConversationState extends State<Conversation> {
       databaseMethods.addConversationMessages(widget.chatRoomId, messageMap);
       messageController.text = ''; // Clear the message field once sent.
     }
+    scrollController.animateTo(scrollController.position.minScrollExtent,
+        duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
   }
 
   @override
@@ -70,11 +77,12 @@ class _ConversationState extends State<Conversation> {
             .replaceAll(FirebaseAuth.instance.currentUser.displayName, "")),
       ),
       body: Container(
-          child: Stack(
+          child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(8.0),
-            child: chatMessageList(),
+          Expanded(
+            child: Container(
+              child: chatMessageList(),
+            ),
           ),
           Container(
             alignment: Alignment.bottomCenter,
