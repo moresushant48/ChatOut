@@ -82,6 +82,7 @@ class _ConversationState extends State<Conversation> {
         children: [
           Expanded(
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: chatMessageList(),
             ),
           ),
