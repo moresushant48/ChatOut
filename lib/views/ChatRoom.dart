@@ -62,7 +62,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   );
                 },
               )
-            : LinearProgressIndicator();
+            : RefreshProgressIndicator();
       },
     );
   }
