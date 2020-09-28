@@ -1,6 +1,7 @@
 import 'package:chatapp/helper/HelperClass.dart';
 import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/views/MessageTile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -69,13 +70,50 @@ class _ConversationState extends State<Conversation> {
     });
   }
 
+  Widget isUserOnline(String username) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection("users")
+          .where("username", isEqualTo: username)
+          .snapshots(),
+      builder: (context, snapshot) {
+        //
+        if (snapshot.hasError) {
+          print("error here.");
+          return Text("Offline");
+        }
+        //
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+        // return Text(snapshot.data.documents[0].get('status').toString());
+        return snapshot.data.documents[0].get('status') == true
+            ? CircleAvatar(
+                radius: 8.0,
+                backgroundColor: Colors.green,
+              )
+            : CircleAvatar(
+                radius: 8.0,
+                backgroundColor: Colors.red,
+              );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    String username = HelperClass().trimChatRoomId(
+        chatRoomId: widget.chatRoomId,
+        currentUserName: FirebaseAuth.instance.currentUser.displayName);
     return Scaffold(
       appBar: AppBar(
-        title: Text(HelperClass().trimChatRoomId(
-            chatRoomId: widget.chatRoomId,
-            currentUserName: FirebaseAuth.instance.currentUser.displayName)),
+        title: Text(username),
+        actions: [
+          Container(
+            margin: EdgeInsets.all(4.0),
+            child: username != "Me" ? isUserOnline(username) : Container(),
+          ),
+        ],
       ),
       body: Container(
           child: Column(
