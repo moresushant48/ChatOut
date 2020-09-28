@@ -1,3 +1,4 @@
+import 'package:chatapp/helper/HelperClass.dart';
 import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/views/MessageTile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,9 +73,9 @@ class _ConversationState extends State<Conversation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.chatRoomId
-            .replaceAll("_", "")
-            .replaceAll(FirebaseAuth.instance.currentUser.displayName, "")),
+        title: Text(HelperClass().trimChatRoomId(
+            chatRoomId: widget.chatRoomId,
+            currentUserName: FirebaseAuth.instance.currentUser.displayName)),
       ),
       body: Container(
           child: Column(

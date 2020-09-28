@@ -1,3 +1,4 @@
+import 'package:chatapp/helper/HelperClass.dart';
 import 'package:chatapp/services/DatabaseMethods.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/views/Coversation.dart';
@@ -40,25 +41,22 @@ class _ChatRoomState extends State<ChatRoom> {
                         leading: CircleAvatar(
                           radius: 30.0,
                           child: Text(
-                            snapshot.data.documents[index]
-                                .get('chatRoomId')
-                                .toString()
-                                .replaceAll("_", "")
-                                .replaceAll(
-                                    FirebaseAuth
-                                        .instance.currentUser.displayName,
-                                    "")
-                                .substring(0, 1),
-                            style: TextStyle(fontSize: 24.0),
+                            HelperClass()
+                                .trimChatRoomId(
+                                    chatRoomId: snapshot.data.documents[index]
+                                        .get('chatRoomId'),
+                                    currentUserName: FirebaseAuth
+                                        .instance.currentUser.displayName)
+                                .substring(0, 1)
+                                .toUpperCase(),
+                            style: TextStyle(fontSize: 20.0),
                           ),
                         ),
-                        title: Text(snapshot.data.documents[index]
-                            .get('chatRoomId')
-                            .toString()
-                            .replaceAll("_", "")
-                            .replaceAll(
-                                FirebaseAuth.instance.currentUser.displayName,
-                                "")),
+                        title: Text(HelperClass().trimChatRoomId(
+                            chatRoomId: snapshot.data.documents[index]
+                                .get('chatRoomId'),
+                            currentUserName:
+                                FirebaseAuth.instance.currentUser.displayName)),
                       ),
                     ),
                   );
